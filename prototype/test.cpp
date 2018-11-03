@@ -22,7 +22,7 @@ void parseInput(string sInput)
 	}
 	if ( sInput == "attack" || sInput == "hit" || sInput == "strike")
 	{ 
-		cout << "You attack women and minorities" << endl;
+		cout << "You the undesirables" << endl;
 	}
 	if ( sInput == "quit")
 	{
