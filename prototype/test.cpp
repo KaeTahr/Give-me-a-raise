@@ -4,6 +4,17 @@
 #include "structs.h"
 using namespace std;
 
+/* getMap
+ * Functions reads the map from an external file in the following order:
+ * #Rows
+ * #Columns
+ *  (Enters Loop) Room Description
+ *  Possible Routes of movement ( N S E W)
+ *  Pickups ( Descriptions and whether they are hidden)
+ *  Interactables ( Descriptions and all other attributes)
+ *  Inputs: Functions Reads from a file
+ *  Outputs: Functiion Writes to an Array containing all the information on the map of the game, as well as it dimensions for further operations with the map
+ */
 void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 { 
 	ifstream fMap;
