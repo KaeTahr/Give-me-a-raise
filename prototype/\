@@ -1,0 +1,70 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "structs.h"
+using namespace std;
+
+void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
+{ 
+	ifstream fMap;
+	fMap.open( "Test.map");
+	if ( fMap.is_open())
+	{ 
+	
+		//Get Map Dimensions
+		fMap >> iMapRows;
+		fMap >> iMapColumns;
+
+		//Get Map Information
+		for ( int iIndexRows = 0; iIndexRows < iMapRows; iIndexRows++)
+		{ 
+			for (int iIndexColumns = 0; iIndexColumns < iMapColumns; iIndexColumns++)
+			{ 
+				getline( fMap,oMatMap[iIndexRows][iIndexColumns].sDescription ); //Save Description
+				//Where can you go?
+				fMap >> oMatMap[iIndexRows][iIndexColumns].bNorth ;
+				fMap >> oMatMap[iIndexRows][iIndexColumns].bSouth ;
+				fMap >> oMatMap[iIndexRows][iIndexColumns].bEast ;
+				fMap >> oMatMap[iIndexRows][iIndexColumns].bWest ;
+			
+				//Pickups
+				int iCounterPickups;
+				//Are there any pickups? How many?
+				fMap >> iCounterPickups;
+				/*
+				for ( iCounterPickups = 0; iCounterPickups < 10; iCounterPickups++)
+				{ 
+					if ( )
+				}
+				*/
+
+
+			}
+		}
+	}
+	else
+	{
+		cout << "Error opening map file" << endl;
+	}
+	fMap.close();
+	//Debugging
+	cout << iMapRows << "is Rows" << endl << iMapColumns << "Is Columns"<< endl << oMatMap[0][0].sDescription << endl; 
+}
+
+int main ()
+{ 
+	//Variables
+	oRoom oMatMap[50][50];
+	int iMapRows, iMapColumns;
+
+	
+	getMap(oMatMap, iMapRows, iMapColumns); //Get the map from external file
+
+	/*while ( bGameRunning == 1) // Game loop start
+	{ 
+
+	
+
+	}
+	*/
+}

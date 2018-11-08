@@ -1,55 +1,102 @@
-#include <string>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include "structs.h"
 using namespace std;
 
-//Global Variables
-bool bGameRunning;
-
-string getUserInput()
+void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 { 
-	string sInput;
-	cout << "What will you do?" << endl;
-	cin >> sInput;
+	ifstream fMap;
+	fMap.open( "Test.map");
+	string sBuffer;//Needed to use this because reading from a file doesn't play nice when mixing strings and other datatypes
+	string sTest; //DELETE
+	if ( fMap.is_open())
+	{ 
 	
-	return sInput;
-}
+		//Get Map Dimensions	
 
-void parseInput(string sInput)
-{ 
-	if (sInput == "dab")
-	{ 
-		 cout << "You dab" << endl << "*dabs" << endl;
+		//REMEMBER: this process for reading a whole line, then converting it to a number
+		//and never again mix datatypes when reading from a file this way
+		getline( fMap, sBuffer);
+		iMapRows = strtol( sBuffer.c_str(), NULL, 10);
+		//cout << iMapRows << "is columns" << endl;
+
+		getline( fMap, sBuffer);
+		iMapColumns = strtol( sBuffer.c_str(), NULL, 10);
+		//cout << iMapColumns << "is columns" << endl;
+		
+
+		//Get Map Information
+		for ( int iIndexRows = 0; iIndexRows < iMapRows; iIndexRows++)
+		{ 
+			for (int iIndexColumns = 0; iIndexColumns < iMapColumns; iIndexColumns++)
+			{ 
+				getline( fMap, oMatMap[iIndexRows][iIndexColumns].sDescription); //Save Description
+				
+				
+				//Where can you go?
+				getline( fMap, sBuffer);
+				oMatMap[iIndexRows][iIndexColumns].bNorth = strtol( sBuffer.c_str(), NULL, 10);
+			
+				getline( fMap, sBuffer);
+				oMatMap[iIndexRows][iIndexColumns].bSouth = strtol( sBuffer.c_str(), NULL, 10);
+
+				getline( fMap, sBuffer);
+				oMatMap[iIndexRows][iIndexColumns].bEast = strtol( sBuffer.c_str(), NULL, 10);
+
+				getline( fMap, sBuffer);
+				oMatMap[iIndexRows][iIndexColumns].bWest = strtol( sBuffer.c_str(), NULL, 10);
+				//Pickups
+				int iCounterPickups;
+				//Are there any pickups? How many?
+				fMap >> iCounterPickups;
+				/*
+				for ( iCounterPickups = 0; iCounterPickups < 10; iCounterPickups++)
+				{ 
+					if ( )
+				}
+				*/
+
+
+			}
+		}
 	}
-	if ( sInput == "attack" || sInput == "hit" || sInput == "strike")
-	{ 
-		cout << "You attack women and minorities" << endl;
-	}
-	if ( sInput == "quit")
+	else
 	{
-		bGameRunning = 0;
+		cout << "Error opening map file" << endl;
 	}
+	fMap.close();
+
+	/*
+	//Debugging
+	cout <<  oMatMap[0][0].sDescription << " <- Is the description" << endl; 
+	if ( oMatMap[0][0].bEast == false)
+	{ 
+		cout << "Can't move east" << endl;
+	}
+	if (oMatMap[0][0].bEast == true)
+	{ 
+		cout << "Can move east" << endl;
+	}
+	*/
+
 }
 
 int main ()
 { 
-	bGameRunning = 1;
+	//Variables
+	oRoom oMatMap[50][50];
+	int iMapRows, iMapColumns;
 
-	while ( bGameRunning == 1)
+	
+	getMap(oMatMap, iMapRows, iMapColumns); //Get the map from external file
+
+	/*while ( bGameRunning == 1) // Game loop start
 	{ 
+
 	
-		//Variables and Strings
-		string sUserInput;
 
-		//Input
-		sUserInput = getUserInput();
-
-		//Processing
-		parseInput(sUserInput);
-
-		//Ouput
-		//printStory();
 	}
-	
-	return 0;
+	*/
 
 }

@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+struct oPickup
+{ 
+	string sDescription;
+	bool bHidden;
+	
+};
+
+struct oInteractables
+{ 
+	string sDescription;
+	bool bCanRead, bCanDestroy, bCanOpen, bCanClose, bCanPress, bCanPull, bCanPush, bHidden;
+	
+};
+
+struct oRoom
+{ 
+	string sDescription;
+	bool bNorth, bSouth, bEast, bWest;
+	oPickup oArrPickups[10];
+	oInteractables oArrInteractables[10];
+};
+
+//NOT FINISHED
+struct oInventory
+{ 
+	bool bCanCombine, bCandrink, bCanEat,bCanEquip;
+};
