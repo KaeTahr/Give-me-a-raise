@@ -47,17 +47,84 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 				getline( fMap, sBuffer);
 				oMatMap[iIndexRows][iIndexColumns].bWest = strtol( sBuffer.c_str(), NULL, 10);
 				//Pickups
-				int iCounterPickups;
-				//Are there any pickups? How many?
-				fMap >> iCounterPickups;
-				/*
-				for ( iCounterPickups = 0; iCounterPickups < 10; iCounterPickups++)
+				bool bPickups;
+				//Are there any pickups?
+				getline( fMap, sBuffer );
+				bPickups = strtol( sBuffer.c_str(), NULL, 10);
+				
+				if ( bPickups == true)
 				{ 
-					if ( )
+					int iHowManyPickups;
+					getline( fMap, sBuffer );
+					iHowManyPickups = strtol( sBuffer.c_str(), NULL, 10);
+
+					//Get Info on items, if there are items
+					int iCounterPickups = 0;
+					while ( iCounterPickups < iHowManyPickups)
+					{ 
+						//Get Description
+						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sDescription);
+						//Hidden?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].bHidden = strtol( sBuffer.c_str(), NULL, 10);
+						iCounterPickups++;
+
+					}
 				}
-				*/
+				//End of Pickups stuff
+
+				//Interactables
+
+				bool bInteractables;
+				//Are there any interactables?
+				getline( fMap, sBuffer );
+				bInteractables = strtol( sBuffer.c_str(), NULL, 10);
+				
+				if ( bInteractables == true)
+				{ 
+					int iHowManyInteractables;
+					getline( fMap, sBuffer );
+					iHowManyInteractables = strtol( sBuffer.c_str(), NULL, 10);
+
+					//Get Info on items, if there are items
+					int iCounterInteractables = 0;
+					while ( iCounterInteractables < iHowManyInteractables)
+					{ 
+						//Get Description
+						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sDescription);
+						//Hidden?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bHidden = strtol( sBuffer.c_str(), NULL, 10);
+						//Readable
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = strtol( sBuffer.c_str(), NULL, 10);
+						if ( oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = true )
+						{ 
+							getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sRead);
+						}
+						
+						//Destroyable?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanDestroy = strtol( sBuffer.c_str(), NULL, 10);
+						//Can you Open it?	
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanOpen = strtol( sBuffer.c_str(), NULL, 10);
+						//Can you close it?	
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanClose = strtol( sBuffer.c_str(), NULL, 10);
+						//Can you press it?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanPress = strtol( sBuffer.c_str(), NULL, 10);
+						//Can you push it?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanPull = strtol( sBuffer.c_str(), NULL, 10);
 
 
+						iCounterInteractables++;
+
+					}
+				}
+				//End of Interactables stuff
 			}
 		}
 	}
@@ -67,7 +134,7 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 	}
 	fMap.close();
 
-	/*
+	
 	//Debugging
 	cout <<  oMatMap[0][0].sDescription << " <- Is the description" << endl; 
 	if ( oMatMap[0][0].bEast == false)
@@ -78,7 +145,7 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 	{ 
 		cout << "Can move east" << endl;
 	}
-	*/
+	
 
 }
 

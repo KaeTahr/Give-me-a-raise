@@ -84,7 +84,7 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 				{ 
 					int iHowManyInteractables;
 					getline( fMap, sBuffer );
-					iHowManyiInteractables = strtol( sBuffer.c_str(), NULL, 10);
+					iHowManyInteractables = strtol( sBuffer.c_str(), NULL, 10);
 
 					//Get Info on items, if there are items
 					int iCounterInteractables = 0;
@@ -100,7 +100,7 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = strtol( sBuffer.c_str(), NULL, 10);
 						if ( oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = true )
 						{ 
-							getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sRead)
+							getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sRead);
 						}
 						
 						//Destroyable?
