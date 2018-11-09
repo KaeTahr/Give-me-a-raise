@@ -4,6 +4,9 @@
 #include "structs.h"
 using namespace std;
 
+//Global Variables
+bool bGameRunning; //For game loop
+
 /* getMap
  * Functions reads the map from an external file in the following order:
  * #Rows
@@ -20,7 +23,6 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 	ifstream fMap;
 	fMap.open( "Test.map");
 	string sBuffer;//Needed to use this because reading from a file doesn't play nice when mixing strings and other datatypes
-	string sTest; //DELETE
 	if ( fMap.is_open())
 	{ 
 	
@@ -36,7 +38,6 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 		iMapColumns = strtol( sBuffer.c_str(), NULL, 10);
 		//cout << iMapColumns << "is columns" << endl;
 		
-
 		//Get Map Information
 		for ( int iIndexRows = 0; iIndexRows < iMapRows; iIndexRows++)
 		{ 
@@ -61,17 +62,14 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 				bool bPickups;
 				//Are there any pickups?
 				getline( fMap, sBuffer );
-				bPickups = strtol( sBuffer.c_str(), NULL, 10);
+				oMatMap[iIndexRows][iIndexColumns].iHowManyPickups = strtol( sBuffer.c_str(), NULL, 10);
 				
-				if ( bPickups == true)
+				if ( oMatMap[iIndexRows][iIndexColumns].iHowManyPickups > 0)
 				{ 
-					int iHowManyPickups;
-					getline( fMap, sBuffer );
-					iHowManyPickups = strtol( sBuffer.c_str(), NULL, 10);
 
 					//Get Info on items, if there are items
 					int iCounterPickups = 0;
-					while ( iCounterPickups < iHowManyPickups)
+					while ( iCounterPickups < oMatMap[iIndexRows][iIndexColumns].iHowManyPickups)
 					{ 
 						//Get Description
 						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sDescription);
@@ -86,20 +84,16 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 
 				//Interactables
 
-				bool bInteractables;
-				//Are there any interactables?
+				//Are there any interactables? How Many?
 				getline( fMap, sBuffer );
-				bInteractables = strtol( sBuffer.c_str(), NULL, 10);
+				oMatMap[iIndexRows][iIndexColumns].iHowManyInteractables = strtol( sBuffer.c_str(), NULL, 10);
 				
-				if ( bInteractables == true)
+				if ( oMatMap[iIndexRows][iIndexColumns].iHowManyInteractables > 0)
 				{ 
-					int iHowManyInteractables;
-					getline( fMap, sBuffer );
-					iHowManyInteractables = strtol( sBuffer.c_str(), NULL, 10);
 
 					//Get Info on items, if there are items
 					int iCounterInteractables = 0;
-					while ( iCounterInteractables < iHowManyInteractables)
+					while ( iCounterInteractables < oMatMap[iIndexRows][iIndexColumns].iHowManyInteractables)
 					{ 
 						//Get Description
 						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sDescription);
@@ -129,10 +123,7 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 						//Can you push it?
 						getline( fMap, sBuffer);
 						oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanPull = strtol( sBuffer.c_str(), NULL, 10);
-
-
 						iCounterInteractables++;
-
 					}
 				}
 				//End of Interactables stuff
@@ -157,24 +148,98 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 		cout << "Can move east" << endl;
 	}
 	*/
+}
+
+/* printInit
+ * prints the first line of the story, WHICH WON'T BE REPEATED
+ * Input: a string from a file
+ * Output: NONE
+ */
+void printInit( )
+{ 
+	ifstream fDescription;
+	fDescription.open( "game_info.txt");
+	string sLaunch;
+	if ( fDescription.is_open())
+	{ 
+		cout << "Game Launched" << endl;
+		int iCounter = 0;
+		while ( iCounter < 10) // Will print up to 10 lines
+		{
+
+			getline( fDescription, sLaunch); 
+			cout <<  sLaunch << endl;;
+			iCounter++;
+		}
+	}
+	else
+	{ 
+		cout << "No game description found, skipping" << endl;
+	}
 
 }
 
+/* printStatus
+ * prints out all the current valid descriptions
+ * Inputs: The player's information stored in a struct, the map;
+ * Outputs: NONE
+ */
+void printStatus( oGamer oPlayer, oRoom oMatMap[50][50])
+{ 
+	//First print general room information
+	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].sDescription << endl;
+
+	//Then print information on visible interactables
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].iHowManyInteractables > 0)
+	{ 
+		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].iHowManyInteractables; iCounter++ )
+		{ 
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].oArrInteractables[iCounter].bHidden = false)
+			{ 
+				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].oArrInteractables[iCounter].sDescription << endl;
+			}
+		}
+	}
+	//Lastly print out Pickups information
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].iHowManyPickups > 0)
+	{ 
+		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].iHowManyPickups; iCounter++ )
+		{ 
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].oArrPickups[iCounter].bHidden = false)
+			{ 
+				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].oArrPickups[iCounter].sDescription << endl;
+			}
+		}
+	}
+}
+
+/* main
+ * calls all other functions. Contains the game loop
+ * Inputs: NONE
+ * Outputs: VOID
+ */
 int main ()
 { 
 	//Variables
 	oRoom oMatMap[50][50];
 	int iMapRows, iMapColumns;
+	int iPlayerLocation[2] = {0, 0};
 
 	
 	getMap(oMatMap, iMapRows, iMapColumns); //Get the map from external file
+	printInit();
+	bGameRunning = 1;
+	oGamer oPlayer;
+	while ( bGameRunning == 1) // Game loop start
+	{
+		//Print current status
+		printStatus(oPlayer, oMatMap);
 
-	/*while ( bGameRunning == 1) // Game loop start
-	{ 
+		//Get and parse user input
 
 	
 
 	}
-	*/
+	
 
 }
