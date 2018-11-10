@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include "structs.h"
+#include <sstream>
 using namespace std;
 
 //Global Variables
@@ -162,13 +163,13 @@ void printInit( )
 	string sLaunch;
 	if ( fDescription.is_open())
 	{ 
-		cout << "Game Launched" << endl;
+		cout << "game launched" << endl;
 		int iCounter = 0;
 		while ( iCounter < 10) // Will print up to 10 lines
 		{
 
 			getline( fDescription, sLaunch); 
-			cout <<  sLaunch << endl;;
+			cout <<  sLaunch << endl;
 			iCounter++;
 		}
 	}
@@ -176,6 +177,8 @@ void printInit( )
 	{ 
 		cout << "No game description found, skipping" << endl;
 	}
+	//General Instructions for the engine
+	cout << "You can input up to 4 words. Any words after the 4th will be ignored" << endl;
 
 }
 
@@ -213,6 +216,36 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[50][50])
 	}
 }
 
+/* getUserInput
+ * gets input from the user, and splits it in up to four seperate strings
+ * Inputs: NONE
+ * Outpuits: Input from the user is returned
+ */
+string getUserInput()
+{ 
+	string sInput;
+	cout << "→ ";
+	getline( cin, sInput);
+	return sInput;
+}
+
+/* parse
+ * Receives a string, and splits it in up to 4 substrings, and then interprets the user input
+ * Input: Input gotten from the user
+ * Output: Writes changes into the map
+ */
+void parse(oGamer oPlayer, oRoom oMatMap[50][50], string sUserInput )
+{ 
+	string sArrInput[4];
+	//Here we need to split this string in 4
+	//Most complex sentence would be VERB + IO + PREPOSITION + DO
+	//Example: Hit monster with sword
+	//Simple sentences should also be legal like
+	//take key
+	//or simply:
+	//North
+}
+
 /* main
  * calls all other functions. Contains the game loop
  * Inputs: NONE
@@ -236,10 +269,12 @@ int main ()
 		printStatus(oPlayer, oMatMap);
 
 		//Get and parse user input
-
-	
-
+		string sInput;
+		//Input Function
+		sInput = getUserInput();
+		//Processing
+		parse( oPlayer, oMatMap, sInput);
 	}
 	
-
+	return 0;
 }
