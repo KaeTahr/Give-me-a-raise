@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include "structs.h"
-#include <sstream>
 using namespace std;
 
 //Global Variables
@@ -237,6 +236,23 @@ string getUserInput()
 void parse(oGamer oPlayer, oRoom oMatMap[50][50], string sUserInput )
 { 
 	string sArrInput[4];
+	int iPosition;
+
+	for ( int iCounter = 0; iCounter < 4; iCounter++)
+	{ 
+		iPosition = sUserInput.find(" ");
+		sArrInput[iCounter] = sUserInput.substr(0, iPosition);
+		//cout << sArrInput[iCounter] << " we parsed this" << endl;
+		if ( iPosition < 0)
+		{ 
+			//cout << "stop parsing" << endl;
+			break;
+		}
+		sUserInput = sUserInput.substr(iPosition + 1);
+		//cout << sUserInput << " This is what is remaining" << endl;
+
+	}
+	//cout << sArrInput[3] << endl;
 	//Here we need to split this string in 4
 	//Most complex sentence would be VERB + IO + PREPOSITION + DO
 	//Example: Hit monster with sword
