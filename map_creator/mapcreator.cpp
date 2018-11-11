@@ -6,9 +6,11 @@ using namespace std;
 void createMap()
 { 
 	ofstream fMap;
-	cout << "Opening/ Creating Test.map file" << endl;
-	fMap.open( "Test.map");
 	string sBuffer;//Needed to use this because reading from a file doesn't play nice when mixing strings and other datatypes
+	cout << "How would you like to call your map file?" << endl;
+	getline( cin, sBuffer);
+	cout << "Opening/ Creating map file" << endl;
+	fMap.open( sBuffer);
 	if ( fMap.is_open())
 	{ 
 		//Get Map Dimensions	
@@ -79,7 +81,7 @@ void createMap()
 						fMap << sBuffer << endl;
 
 						//Hidden?
-						cout << "Is the following item hidden? 0 or 1): " << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << endl;
+						cout << "Is the following item hidden? (0 or 1): " << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << endl;
 						getline (cin, sBuffer);
 						fMap << sBuffer << endl;
 
@@ -169,19 +171,6 @@ void createMap()
 		cout << "Error opening map file" << endl;
 	}
 	fMap.close();
-
-	/*
-	//Debugging
-	cout <<  oMatMap[0][0].sDescription << " <- Is the description" << endl; 
-	if ( oMatMap[0][0].bEast == false)
-	{ 
-		cout << "Can't move east" << endl;
-	}
-	if (oMatMap[0][0].bEast == true)
-	{ 
-		cout << "Can move east" << endl;
-	}
-	*/
 }
 
 int main ()
