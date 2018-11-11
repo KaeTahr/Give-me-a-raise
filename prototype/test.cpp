@@ -43,6 +43,8 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 		{ 
 			for (int iIndexColumns = 0; iIndexColumns < iMapColumns; iIndexColumns++)
 			{ 
+				
+				getline( fMap, oMatMap[iIndexRows][iIndexColumns].sName); //Save Name
 				getline( fMap, oMatMap[iIndexRows][iIndexColumns].sDescription); //Save Description
 				
 				
@@ -59,7 +61,6 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 				getline( fMap, sBuffer);
 				oMatMap[iIndexRows][iIndexColumns].bWest = strtol( sBuffer.c_str(), NULL, 10);
 				//Pickups
-				bool bPickups;
 				//Are there any pickups?
 				getline( fMap, sBuffer );
 				oMatMap[iIndexRows][iIndexColumns].iHowManyPickups = strtol( sBuffer.c_str(), NULL, 10);
@@ -71,6 +72,8 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 					int iCounterPickups = 0;
 					while ( iCounterPickups < oMatMap[iIndexRows][iIndexColumns].iHowManyPickups)
 					{ 
+						//Get Name
+						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sName);
 						//Get Description
 						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sDescription);
 						//Hidden?
@@ -95,6 +98,9 @@ void getMap( oRoom oMatMap[50][50], int &iMapRows, int &iMapColumns)
 					int iCounterInteractables = 0;
 					while ( iCounterInteractables < oMatMap[iIndexRows][iIndexColumns].iHowManyInteractables)
 					{ 
+
+						//Get Name
+						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sName);
 						//Get Description
 						getline( fMap, oMatMap[iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sDescription);
 						//Hidden?
