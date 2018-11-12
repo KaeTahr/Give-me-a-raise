@@ -25,9 +25,9 @@ void createMap()
 		int iColumns =  strtol( sBuffer.c_str(), NULL, 10);
 
 		//Get Map Information
-		for ( int iIndexRows = 0; iIndexRows < iRows; iIndexRows++)
+		for ( int iIndexColumns = 0; iIndexColumns < iColumns; iIndexColumns++)
 		{ 
-			for (int iIndexColumns = 0; iIndexColumns < iColumns; iIndexColumns++)
+			for (int iIndexRows = 0; iIndexRows < iRows; iIndexRows++)
 			{ 
 				cout << "What is the name of room " << iIndexRows << "," << iIndexColumns << endl;
 				getline (cin, sBuffer);

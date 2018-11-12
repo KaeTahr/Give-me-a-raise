@@ -28,9 +28,9 @@ struct oRoom
 	string sDescription;
 	bool bNorth, bSouth, bEast, bWest;
 	oPickup oArrPickups[10];
-	int iHowManyPickups = 0;
+	int iHowManyPickups;
 	oInteractables oArrInteractables[10];
-	int iHowManyInteractables = 0;
+	int iHowManyInteractables;
 };
 
 //NOT FINISHED
@@ -44,7 +44,7 @@ struct oInventory
 struct oGamer
 { 
 	oInventory oArrInventory[10];
-	int iLocation[2] = {0, 0};
+	int iLocation[2];
 	int iHP = 100;
 
 
