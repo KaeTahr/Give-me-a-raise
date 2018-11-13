@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 using namespace std;
 
@@ -44,7 +43,7 @@ struct oInventory
 struct oGamer
 { 
 	oInventory oArrInventory[10];
-	int iLocation[2];
+	int iLocation[3];
 	int iHP = 100;
 
 

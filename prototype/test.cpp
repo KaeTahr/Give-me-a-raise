@@ -18,7 +18,7 @@ bool bGameRunning; //For game loop
  *  Inputs: Functions Reads from a file
  *  Outputs: Functiion Writes to an Array containing all the information on the map of the game, as well as it dimensions for further operations with the map
  */
-void getMap( oRoom oMatMap[3][50][50], int &iMapFloors, int &iMapRows, int &iMapColumns)
+void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMapColumns)
 { 
 	ifstream fMap;
 	fMap.open( "Test.map");
@@ -31,8 +31,8 @@ void getMap( oRoom oMatMap[3][50][50], int &iMapFloors, int &iMapRows, int &iMap
 		//REMEMBER: this process for reading a whole line, then converting it to a number
 		//and never again mix datatypes when reading from a file this way Respose: XD
 		getline( fMap, sBuffer);
-		iMapFloors = strto1( sBuffer.c_str(), NULL, 10);
-		// just in case... cout << iMapFloors << "is floors"<< endl;
+		iMapFloors = strtol( sBuffer.c_str(), NULL, 10);
+		//cout << iMapFloors << "is floors"<< endl; //just in case
 		
 		getline( fMap, sBuffer);
 		iMapRows = strtol( sBuffer.c_str(), NULL, 10);
@@ -45,9 +45,9 @@ void getMap( oRoom oMatMap[3][50][50], int &iMapFloors, int &iMapRows, int &iMap
 		//Get Map Information
 		for ( int iIndexFloors = 0; iIndexFloors < iMapFloors; iIndexFloors++)
 		{	
-			for ( int iIndexRows = 0; iIndexRows < iMapRows; iIndexRows++)
+			for ( int iIndexColumns = 0; iIndexColumns < iMapColumns; iIndexColumns++)
 			{ 
-				for (int iIndexColumns = 0; iIndexColumns < iMapColumns; iIndexColumns++)
+				for (int iIndexRows = 0; iIndexRows < iMapRows; iIndexRows++)
 				{ 
 				
 				
@@ -116,7 +116,7 @@ void getMap( oRoom oMatMap[3][50][50], int &iMapFloors, int &iMapRows, int &iMap
 						//Readable
 						getline( fMap, sBuffer);
 						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = strtol( sBuffer.c_str(), NULL, 10);
-						if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = true )
+						if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead == true )
 						{ 
 							getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sRead);
 						}
@@ -143,24 +143,12 @@ void getMap( oRoom oMatMap[3][50][50], int &iMapFloors, int &iMapRows, int &iMap
 			}
 		}
 	}
+	}
 	else
 	{
 		cout << "Error opening map file" << endl;
 	}
 	fMap.close();
-
-	/*
-	//Debugging
-	cout <<  oMatMap[0][0].sDescription << " <- Is the description" << endl; 
-	if ( oMatMap[0][0].bEast == false)
-	{ 
-		cout << "Can't move east" << endl;
-	}
-	if (oMatMap[0][0].bEast == true)
-	{ 
-		cout << "Can move east" << endl;
-	}
-	*/
 }
 
 /* printInit
@@ -199,7 +187,7 @@ void printInit( )
  * Inputs: The player's information stored in a struct, the map;
  * Outputs: NONE
  */
-void printStatus( oGamer oPlayer, oRoom oMatMap[3][50][50])
+void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 { 
 	//First print general room information
 	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
@@ -209,18 +197,18 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][50][50])
 	{ 
 		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyInteractables; iCounter++ )
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].bHidden = false)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].bHidden == false)
 			{ 
 				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].sDescription << endl;
 			}
 		}
 	}
 	//Lastly print out Pickups information
-	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].iHowManyPickups > 0)
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyPickups > 0)
 	{ 
 		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyPickups; iCounter++ )
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bHidden = false)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bHidden == false)
 			{ 
 				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].sDescription << endl;
 			}
@@ -236,7 +224,7 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][50][50])
 string getUserInput()
 { 
 	string sInput;
-	cout << "? ";
+	cout << "→ ";
 	getline( cin, sInput);
 	return sInput;
 }
@@ -246,10 +234,13 @@ string getUserInput()
  * Input: Input gotten from the user
  * Output: Writes changes into the map
  */
-void parse(oGamer oPlayer, oRoom oMatMap[3][50][50], string sUserInput )
+void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 { 
 	string sArrInput[4];
 	int iPosition;
+	//iPlayer.iLocation[0] = z
+	//iPlater.iLocation[1] = x
+	//iPlayer.iLocation[3] = y
 
 	for ( int iCounter = 0; iCounter < 4; iCounter++)
 	{ 
@@ -269,56 +260,61 @@ void parse(oGamer oPlayer, oRoom oMatMap[3][50][50], string sUserInput )
 	//MOVEMENT
 		if ( sArrInput[0] == "north" || sArrInput[0] == "North" || sArrInput[0] == "N")
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].bNorth == 0)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bNorth == 0)
 			{ 
 				cout << "You can't go North." << endl;
 
 			}
 			else
 			{ 
-				oPlayer.iLocation[1] -= 1;
+				oPlayer.iLocation[2] -= 1;
 			}
 		}
 
-		if ( sArrInput[0] == "south" || sArrInput[0] == "South" || sArrInput[0] == "S")
+		else if ( sArrInput[0] == "south" || sArrInput[0] == "South" || sArrInput[0] == "S")
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].bSouth == 0)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bSouth == 0)
 			{ 
 				cout << "You can't go South." << endl;
 
 			}
 			else
 			{ 
-				oPlayer.iLocation[1] += 1;
+				oPlayer.iLocation[2] += 1;
 			}
 		}
 
-		if ( sArrInput[0] == "east" || sArrInput[0] == "East" || sArrInput[0] == "E")
+		else if ( sArrInput[0] == "east" || sArrInput[0] == "East" || sArrInput[0] == "E")
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].bEast == 0)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bEast == 0)
 			{ 
 				cout << "You can't go East." << endl;
 
 			}
 			else
 			{ 
-				oPlayer.iLocation[0] += 1;
+				oPlayer.iLocation[1] += 1;
 //				cout << "You moved in X to " << oPlayer.iLocation[0] << endl;
 			}
 		}
 		
-		if ( sArrInput[0] == "west" || sArrInput[0] == "West" || sArrInput[0] == "W")
+		else if ( sArrInput[0] == "west" || sArrInput[0] == "West" || sArrInput[0] == "W")
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]].bWest == 0)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bWest == 0)
 			{ 
 				cout << "You can't go West." << endl;
 
 			}
 			else
 			{ 
-				oPlayer.iLocation[0] -= 1;
+				oPlayer.iLocation[1] -= 1;
 			}
 
+		}
+
+		else
+		{ 
+			cout << "Sorry, I don't understand: " << sArrInput[0]	<< " " << sArrInput[1] << " " << sArrInput[2] << " " << sArrInput[3] << endl;
 		}
 	//cout << sArrInput[3] << endl;
 	//Here we need to split this string in 4
@@ -338,15 +334,14 @@ void parse(oGamer oPlayer, oRoom oMatMap[3][50][50], string sUserInput )
 int main ()
 { 
 	//Variables
-	oRoom oMatMap[3][50][50];
+	oRoom oMatMap[3][10][10];
 	int iMapFloors, iMapRows, iMapColumns;
-	int iPlayerLocation[3] = {0, 0, 0};
+	oGamer oPlayer;
 
 	
 	getMap(oMatMap, iMapFloors, iMapRows, iMapColumns); //Get the map from external file
 	printInit();
 	bGameRunning = 1;
-	oGamer oPlayer;
 	oPlayer.iLocation[0] = 0;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
