@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
 using namespace std;
 
 void createMap()
@@ -10,7 +11,7 @@ void createMap()
 	cout << "How would you like to call your map file?" << endl;
 	getline( cin, sBuffer);
 	cout << "Opening/ Creating map file" << endl;
-	fMap.open( sBuffer);
+	fMap.open( sBuffer.c_str());
 	if ( fMap.is_open())
 	{ 
 		//Get Map Dimensions	
@@ -88,11 +89,6 @@ void createMap()
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
 
-							//Hidden?
-							cout << "Is the following item hidden? (0 or 1): " << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
-
 							iCounterPickups++;
 						}
 					}
@@ -122,49 +118,34 @@ void createMap()
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
 
-							//Hidden?
-							cout << "Is the following item hidden? (0 or 1): " << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
+							//Examinable
+							cout << "Is the following item examinable? (0 or 1): " << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
+							bool bExaminable;
+							bExaminable = strtol( sBuffer.c_str(), NULL, 10);
 
-							//Readable
-							cout << "Is the following item readable? (0 or 1): " << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
-							bool bReadable;
-							bReadable = strtol( sBuffer.c_str(), NULL, 10);
-
-							if ( bReadable == true )
+							if ( bExaminable == true )
 							{ 
-								cout << "What does this interactable read?" << endl;
+								cout << "What does this interactable examines?" << endl;
 								getline (cin, sBuffer);
 								fMap << sBuffer << endl;
 							}
 						
-							//Destroyable?
-							cout << "Is this interactable destroyable?" << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
+							//Activable/Available for actions
+							cout << "Is this interactable activable?" << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
+							
+							bool bActivable;
+							bActivable= strtol( sBuffer.c_str(), NULL, 10);
 
-							//Can you Open it?	
-							cout << "Can you open this interactable? (if it's a door, is it closed?) " << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
-						
-							//Can you close it?	
-							cout << "Can you close this interactable? ( if it's a door, is it open?) " << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
-
-							//Can you press it?
-							cout << "Can you press this interactable?" << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns <<  " Floor " << iIndexFloors << endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
-
-							//Can you push it?
-							cout << "Can you push this interactable?" << iCounterInteractables << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors <<  endl;
-							getline (cin, sBuffer);
-							fMap << sBuffer << endl;
+							if ( bActivable == true )
+							{ 
+								cout << "What does this interactable actives? (text of what it says if activated)" << endl;
+								getline (cin, sBuffer);
+								fMap << sBuffer << endl;
+							}
 
 							iCounterInteractables++;
 						}
