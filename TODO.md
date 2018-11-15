@@ -1,6 +1,14 @@
-#TODO
+# TODO
 
-add 3rd dimension to map creator.
-add interactables to parser.
-Change room descriptions in-game.
-Make the map.
+## Engine-related stuff
+- implement stairs
+- add picking up items
+- implement inventory
+
+
+## This will be done with a game function
+- Change room descriptions in-game.
+
+
+## Other
+- Make the map.
