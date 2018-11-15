@@ -23,11 +23,17 @@ struct oInteractables
 	
 };
 
+struct oStairs
+{ 
+	bool bCanGoUp, bCanGoDown;
+};
+
 struct oRoom
 { 
 	string sName;
 	string sDescription;
-	bool bNorth, bSouth, bEast, bWest;
+	bool bNorth, bSouth, bEast, bWest, bStairs;
+	oStairs oStaircase;
 	oPickup oArrPickups[10];
 	int iHowManyPickups = 0;
 	oInteractables oArrInteractables[10];

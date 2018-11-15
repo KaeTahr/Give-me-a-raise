@@ -69,6 +69,19 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 
 				getline( fMap, sBuffer);
 				oMatMap[iIndexFloors][iIndexRows][iIndexColumns].bWest = strtol( sBuffer.c_str(), NULL, 10);
+			
+				//Stairs
+				getline( fMap, sBuffer);
+				oMatMap[iIndexFloors][iIndexRows][iIndexColumns].bStairs = strtol( sBuffer.c_str(), NULL, 10);
+				if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].bStairs == true)
+				{ 
+					getline( fMap, sBuffer);
+					oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oStaircase.bCanGoUp= strtol( sBuffer.c_str(), NULL, 10);
+					
+
+					getline( fMap, sBuffer);
+					oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oStaircase.bCanGoDown= strtol( sBuffer.c_str(), NULL, 10);
+				}
 				//Pickups
 				//Are there any pickups?
 				getline( fMap, sBuffer );
@@ -221,6 +234,7 @@ string getUserInput()
  * Input: Input gotten from the user
  * Output: Writes changes into the map
  */
+
 void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 { 
 	string sArrInput[4];
@@ -298,6 +312,88 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}
 
 		}
+
+		//Stairs
+		else if ( sArrInput[0] == "go")
+		{ 
+			if ( sArrInput[1] == "up" || sArrInput[1] == "upstairs")
+			{ 
+				if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
+				{ 
+					if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oStaircase.bCanGoUp == true)
+					{ 
+						cout << "You climbed the stairs" << endl;
+						oPlayer.iLocation[0] += 1;
+					}
+					else
+					{ 
+						cout << "It seems you can't go up these stairs"  << endl;
+					}
+				}
+				else 
+				{ 
+					cout << "There are no stairs here" << endl;
+				}
+				
+			}
+			else if  ( sArrInput[1] == "down" || sArrInput[1] == "downstairs")
+			{ 
+				
+				if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
+				{ 
+					if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oStaircase.bCanGoDown == true)
+					{ 
+						cout << "You climbed down the stairs" << endl;
+						oPlayer.iLocation[0] -= 1;
+					}
+					else
+					{ 
+						cout << "It seems you can't go down these stairs" << endl;
+					}
+				}
+			}
+		}
+		else if ( sArrInput[0] == "up")
+		{ 
+				
+			if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
+			{ 
+				if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oStaircase.bCanGoUp == true)
+				{ 
+					cout << "You climbed the stairs" << endl;
+					oPlayer.iLocation[0] += 1;
+				}
+				else
+				{ 
+					cout << "It seems you can't go up these stairs" << endl;
+				}
+			}
+			else 
+			{ 
+				cout << "There are no stairs here" << endl;
+			}
+		}
+		else if ( sArrInput[0] == "down")
+		{ 
+				
+			if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
+			{ 
+				if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oStaircase.bCanGoDown == true)
+				{ 
+					cout << "You climbed down the stairs" << endl;
+					oPlayer.iLocation[0] -= 1;
+				}
+				else
+				{ 
+					cout << "It seems you can't go down these stairs" << endl;
+				}
+			}
+			else 
+			{ 
+				cout << "There are no stairs here" << endl;
+			}
+		}
+
 
 		else
 		{ 

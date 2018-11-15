@@ -64,6 +64,24 @@ void createMap()
 					cout << "Can you go West initially at room " << iIndexRows << "," << iIndexColumns << endl;
 					getline( cin, sBuffer);
 					fMap << sBuffer << endl;
+
+					//Stairs
+					cout << "Are there any stairs in the room: " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
+					getline ( cin, sBuffer);
+					fMap << sBuffer << endl;
+					bool bAreStairs = strtol( sBuffer.c_str(), NULL, 10);
+					if ( bAreStairs == true)
+					{ 
+						cout << "Can you go up from these stairs?  (0 or 1)" << endl;
+						getline ( cin, sBuffer);
+						fMap << sBuffer << endl;
+
+						cout << "Can you go down from these stairs?  (0 or 1)" << endl;
+						getline ( cin, sBuffer);
+						fMap << sBuffer << endl;
+					}
+
+
 				
 				//Pickups
 				//Are there any pickups?
