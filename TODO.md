@@ -1,8 +1,8 @@
 # TODO
 
 ## Engine-related stuff
-- implement stairs
 - add picking up items
+- fix printStatus() function
 - implement inventory
 
 

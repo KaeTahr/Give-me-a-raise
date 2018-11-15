@@ -394,6 +394,12 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}
 		}
 
+		else if ( sArrInput[0] == "quit")
+		{ 
+			cout << "Exiting game" << endl;
+			bGameRunning = false;
+		}
+
 
 		else
 		{ 
