@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 #include "structs.h"
 using namespace std;
 
@@ -13,8 +14,8 @@ bool bGameRunning; //For game loop
  * #Columns
  *  (Enters Loop) Room Description
  *  Possible Routes of movement ( N S E W)
- *  Pickups ( Descriptions and whether they are hidden)
- *  Interactables ( Descriptions and all other attributes)
+ *  Pickups ( Descriptions)
+ *  Interactables ( if examinable or not, and if activable or not)
  *  Inputs: Functions Reads from a file
  *  Outputs: Functiion Writes to an Array containing all the information on the map of the game, as well as it dimensions for further operations with the map
  */
@@ -52,8 +53,9 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 				
 				
 				getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].sName); //Save Name
+				//cout << "room name: " << oMatMap[iIndexFloors][iIndexRows][iIndexColumns].sName << endl;
 				getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].sDescription); //Save Description
-				
+				//cout << "Description of the room: "<<oMatMap[iIndexFloors][iIndexRows][iIndexColumns].sDescription << endl;
 				
 				//Where can you go?
 				getline( fMap, sBuffer);
@@ -80,14 +82,11 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 					while ( iCounterPickups < oMatMap[iIndexFloors][iIndexRows][iIndexColumns].iHowManyPickups)
 					{ 
 						//Get Name
-						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sName);
+						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sNameP);
+						//cout << "Name of pickup: " << oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sNameP << endl;
 						//Get Description
 						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sDescription);
-						//Hidden?
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].bHidden = strtol( sBuffer.c_str(), NULL, 10);
 						iCounterPickups++;
-
 					}
 				}
 				//End of Pickups stuff
@@ -107,35 +106,26 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 					{ 
 
 						//Get Name
-						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sName);
-						//Get Description
-						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sDescription);
-						//Hidden?
+						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sNameI);
+						
+						//Examinable?
 						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bHidden = strtol( sBuffer.c_str(), NULL, 10);
-						//Readable
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead = strtol( sBuffer.c_str(), NULL, 10);
-						if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanRead == true )
+						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanExamine = strtol( sBuffer.c_str(), NULL, 10);
+						
+						if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanExamine == true )
 						{ 
-							getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sRead);
+							getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sExamination);
 						}
 						
-						//Destroyable?
+						//Activable?
 						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanDestroy = strtol( sBuffer.c_str(), NULL, 10);
-						//Can you Open it?	
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanOpen = strtol( sBuffer.c_str(), NULL, 10);
-						//Can you close it?	
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanClose = strtol( sBuffer.c_str(), NULL, 10);
-						//Can you press it?
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanPress = strtol( sBuffer.c_str(), NULL, 10);
-						//Can you push it?
-						getline( fMap, sBuffer);
-						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanPull = strtol( sBuffer.c_str(), NULL, 10);
+						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanActivate = strtol( sBuffer.c_str(), NULL, 10);
+						
+						if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].bCanActivate == true )
+						{ 
+							getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrInteractables[iCounterInteractables].sActivated);
+						}
+						
 						iCounterInteractables++;
 					}
 				}
@@ -190,17 +180,14 @@ void printInit( )
 void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 { 
 	//First print general room information
-	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
+	cout << "Floor: " << oPlayer.iLocation[0] << " (" << oPlayer.iLocation[1] << ", " << oPlayer.iLocation[2] << ")" << endl <<oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
 
 	//Then print information on visible interactables
 	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyInteractables > 0)
 	{ 
 		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyInteractables; iCounter++ )
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].bHidden == false)
-			{ 
-				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].sDescription << endl;
-			}
+				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].sNameI << endl;
 		}
 	}
 	//Lastly print out Pickups information
@@ -316,6 +303,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 		{ 
 			cout << "Sorry, I don't understand: " << sArrInput[0]	<< " " << sArrInput[1] << " " << sArrInput[2] << " " << sArrInput[3] << endl;
 		}
+		cout << endl;
 	//cout << sArrInput[3] << endl;
 	//Here we need to split this string in 4
 	//Most complex sentence would be VERB + IO + PREPOSITION + DO
@@ -338,9 +326,9 @@ int main ()
 	int iMapFloors, iMapRows, iMapColumns;
 	oGamer oPlayer;
 
-	
-	getMap(oMatMap, iMapFloors, iMapRows, iMapColumns); //Get the map from external file
 	printInit();
+	getMap(oMatMap, iMapFloors, iMapRows, iMapColumns); //Get the map from external file
+
 	bGameRunning = 1;
 	oPlayer.iLocation[0] = 0;
 	oPlayer.iLocation[1] = 0;
