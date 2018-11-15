@@ -1,10 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <stdlib.h>
 using namespace std;
 
 struct oPickup
 { 
-	string sName;
+	string sNameP;
 	string sDescription;
 	bool bHidden;
 	int iID; //Pickups IDs start with 1
@@ -13,10 +15,10 @@ struct oPickup
 
 struct oInteractables
 { 
-	string sName;
-	string sDescription;
-	bool bCanRead, bCanDestroy, bCanOpen, bCanClose, bCanPress, bCanPull, bCanPush, bHidden;
-	string sRead;
+	string sNameI;
+	bool bCanActivate, bCanExamine;
+	string sExamination;
+	string sActivated;
 	int iID; //Interactables IDs start with 2
 	
 };
@@ -27,24 +29,22 @@ struct oRoom
 	string sDescription;
 	bool bNorth, bSouth, bEast, bWest;
 	oPickup oArrPickups[10];
-	int iHowManyPickups;
+	int iHowManyPickups = 0;
 	oInteractables oArrInteractables[10];
-	int iHowManyInteractables;
+	int iHowManyInteractables = 0;
 };
 
 //NOT FINISHED
 struct oInventory
 { 
 	string sName;
-	bool bCanCombine, bCandrink, bCanEat,bCanEquip;
+	bool bCanUse;
 	int iID; //Inventory items start with 3
 };
 
 struct oGamer
 { 
 	oInventory oArrInventory[10];
-	int iLocation[3];
-	int iHP = 100;
-
+	int iLocation[3] = {0, 0, 0};
 
 };
