@@ -1,0 +1,55 @@
+Give me a raise!: The game
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+Instructions
+For moving between rooms:
+North, N, north
+South, S, south
+East, E, east
+West, W, west
+
+For moving between floors (only when stairs are present):
+up, go upstairs
+down, go downstairs
+
+When objects are found:
+You can either examine them or activate them, try whatever you think might be useful.
+
+If you think any item from your inventory can be used, don't be afraid to input "use [item]"
+
+WARNING: Pickups are always hidden, find them with "find [item]" and take them with "take [item]"
+
+And remember, EVERY room has something you can do.
+Have fun!
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Agent: Noah Pierce
+Age: 28
+Status: single ;)
+
+11/18/2018
+Seemed like another common day at the SSAA, low phone calls and nobody on their offices due to work.
+As a super secret agent, we have a lot of work these days, trouble on its peak and nobody knows what anyone is doing.
+Today, agent Mason was declared dead after visiting Dr. Gauss' presumed lab.
+He was sent on a mission to investigate his household as he was presumed to be working with arabian scientists developing a disease to exterminate american soldiers with a virus.
+Poor Mason, he was the agent of the month all year long, and now he's gone.
+An letter got into each of our offices offering the same mission in which Mason died, it was of extreme importance that it was made if any trouble was intended to ve avoided.
+FBI usually ordered this kind of missions which only agents of the SSAA were able to accomplish.
+Nobody accepted the mission.
+At night, director of the SSAA offered an immediate raise of your sallary if the mission is accomplished successfully.
+I took action and accepted the job, with my current sallary I can't afford the Nintendo Switch with the upcoming Smash Bros, something must be done.
+
+11/20/2018
+2 hours on the highway with my "carcachamobile" and finally I came up to a small rural town where somehow, electricity still works.
+I reread the note from the director which says:
+
+"All you will need is this: a low frequency laser that can penetrate weak surfaces, a camera, and a tranquilizer gun.
+Remember to take pictures of anything that might be useful as evidence, and anything you can take, take it.
+Don't kill, you know that there can be problems with that.
+Use your items wisely and take care.
+P.D. : I just found out that you want the money for the new Smash Bros... don't forget to invite me to play when you buy it.
+
+Director Sakurai "
+
+Obviously I won't invite him, nobody that uses Bayonetta deserves to be invited.
+However, let's get started.
