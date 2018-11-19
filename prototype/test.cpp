@@ -498,6 +498,41 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 		{ 
 			takePickup( oMatMap, oPlayer, sArrInput[1]);
 		}
+		//Using Invnetory
+		else if ( sArrInput[0] == "use")
+		{ 
+			//laser
+			if ( sArrInput[1] == "laser")
+			{ 
+				if ( oPlayer.iLocation[0] == 1 && oPlayer[1] == 3 && oPlayer[2] == 0)
+				{ 
+					useLaser(oMatMap, oPlayer);
+				}
+				else 
+				{ 
+					cout << "Nothing intresting happens." << endl;
+				}
+			}
+			//camera
+			else if ( sArrInput[1] == "camera")
+			{ 
+				useCamera();
+			}
+			//gun
+			else if ( sArrInput[1] == "gun")
+			{ 
+				if ( oPlayer.iLocation[0] == 1 && oPlayer[1] == 3 && oPlayer[2] == 1)
+				{ 
+					useGun(oMatMap, oPlayer);
+				}
+
+			}
+			//clothes
+			else if ( sArrInput[1] == "cool" && sArrInput[2] == "clothes")
+			{ 
+				useClothes();
+			}
+		}
 		
 
 		else
@@ -515,6 +550,40 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 	//North
 }
 
+
+/*checkGun
+ * Checks if you have a gun in your inventory
+ * Inputs: Player Inventory
+ * Outputs: Changes map values
+ *
+ */
+/*
+checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
+{ 
+	if ( oPlayer.iInInventory > 0)
+	{ 
+		for ( int iCounter = 0; iCounter < oPlayer.iInInventory; iCounter++)
+		{ 
+			if ( oPlayer.oArrInventory[iCounter].sName == "gun")
+			{ 
+				oMatMap[1][3][1].oStaircase.bCanGoDown = true;
+			}
+			else 
+			{ 
+				
+				oMatMap[1][3][1].oStaircase.bCanGoDown = false;
+			}
+		}
+
+	}
+	else
+	{ 
+		
+		oMatMap[1][3][1].oStaircase.bCanGoDown = false;
+	}
+}
+*/
+
 /* main
  * calls all other functions. Contains the game loop
  * Inputs: NONE
@@ -530,6 +599,7 @@ int main ()
 	printInit();
 	getMap(oMatMap, iMapFloors, iMapRows, iMapColumns); //Get the map from external file
 
+	//Initialize variables
 	bGameRunning = 1;
 	oPlayer.iInInventory = 0;
 	oPlayer.iLocation[0] = 0;
@@ -546,6 +616,10 @@ int main ()
 		sInput = getUserInput();
 		//Processing
 		parse( oPlayer, oMatMap, sInput);
+		//checkGun(oMatMap, oPlayer);
+
+
+		
 	}
 	
 	return 0;
