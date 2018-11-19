@@ -174,6 +174,8 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 
 extern void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind);
 
+extern void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem);
+
 /* printInit
  * prints the first line of the story, WHICH WON'T BE REPEATED
  * Input: a string from a file
@@ -245,7 +247,7 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 	{ 
 		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyPickups; iCounter++ )
 		{ 
-			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bHidden == false)
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bHidden == false && oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bPicked == false )
 			{ 
 				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].sDescription << endl;
 			}
@@ -491,6 +493,11 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				cout << "Seems that " << sArrInput[1] << " can't be activated." << endl;
 			}		
 		}
+		//Pick
+		else if ( sArrInput[0] == "pick" || sArrInput[0] == "take")
+		{ 
+			takePickup( oMatMap, oPlayer, sArrInput[1]);
+		}
 		
 
 		else
@@ -524,6 +531,7 @@ int main ()
 	getMap(oMatMap, iMapFloors, iMapRows, iMapColumns); //Get the map from external file
 
 	bGameRunning = 1;
+	oPlayer.iInInventory = 0;
 	oPlayer.iLocation[0] = 0;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;

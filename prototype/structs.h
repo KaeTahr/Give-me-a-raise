@@ -9,6 +9,7 @@ struct oPickup
 	string sNameP;
 	string sDescription;
 	bool bHidden;
+	bool bPicked;
 	int iID; //Pickups IDs start with 1
 	
 };
@@ -52,6 +53,7 @@ struct oInventory
 
 struct oGamer
 { 
+	int iInInventory;
 	oInventory oArrInventory[10];
 	int iLocation[3] = {0, 0, 0};
 
