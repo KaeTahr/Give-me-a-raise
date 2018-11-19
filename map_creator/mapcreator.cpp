@@ -107,6 +107,9 @@ void createMap()
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
 
+							//Hidden?
+							cout << "Is the pickup hidden initally? (0 or 1)" << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
+
 							iCounterPickups++;
 						}
 					}

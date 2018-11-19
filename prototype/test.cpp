@@ -99,6 +99,10 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 						//cout << "Name of pickup: " << oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sNameP << endl;
 						//Get Description
 						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].sDescription);
+						//Hidden?
+						getline( fMap, sBuffer);
+						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].bHidden = strtol( sBuffer.c_str(), NULL, 10);
+						
 						iCounterPickups++;
 					}
 				}
@@ -153,6 +157,7 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 	}
 	fMap.close();
 }
+extern void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind);
 
 /* printInit
  * prints the first line of the story, WHICH WON'T BE REPEATED
@@ -392,6 +397,10 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			{ 
 				cout << "There are no stairs here" << endl;
 			}
+		}
+		else if ( sArrInput[0] == "find")
+		{ 
+			findPickup(oMatMap, oPlayer, sArrInput[1]);
 		}
 
 		else if ( sArrInput[0] == "quit")
