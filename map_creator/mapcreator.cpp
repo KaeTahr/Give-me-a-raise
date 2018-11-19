@@ -65,6 +65,24 @@ void createMap()
 					getline( cin, sBuffer);
 					fMap << sBuffer << endl;
 				
+				//Stairs
+					cout << "Are there any stairs? (just 0 or 1)" << endl;
+					getline( cin, sBuffer );
+					fMap << sBuffer << endl;
+					bool bStairs = strtol( sBuffer.c_str(), NULL, 10);
+					
+					if ( bStairs == true)
+					{
+						cout << "Can you go up from these stairs" << endl;
+						getline( cin, sBuffer );
+						fMap << sBuffer << endl;
+						
+						cout << "Can you go down from these stairs?" << endl;
+						getline( cin, sBuffer );
+						fMap << sBuffer << endl;
+					}
+				//End of stairs
+				
 				//Pickups
 				//Are there any pickups?
 					cout << "How many pickups are there in room " << iIndexRows << "," << iIndexColumns <<  " Floor " << iIndexFloors << endl;
@@ -86,6 +104,10 @@ void createMap()
 
 							//Get Description
 							cout << "What is the description of item " << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
+							getline (cin, sBuffer);
+							fMap << sBuffer << endl;
+							//Hidden?
+							cout << "Is it hidden? " << endl;
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
 
