@@ -64,24 +64,6 @@ void createMap()
 					cout << "Can you go West initially at room " << iIndexRows << "," << iIndexColumns << endl;
 					getline( cin, sBuffer);
 					fMap << sBuffer << endl;
-
-					//Stairs
-					cout << "Are there any stairs in the room: " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
-					getline ( cin, sBuffer);
-					fMap << sBuffer << endl;
-					bool bAreStairs = strtol( sBuffer.c_str(), NULL, 10);
-					if ( bAreStairs == true)
-					{ 
-						cout << "Can you go up from these stairs?  (0 or 1)" << endl;
-						getline ( cin, sBuffer);
-						fMap << sBuffer << endl;
-
-						cout << "Can you go down from these stairs?  (0 or 1)" << endl;
-						getline ( cin, sBuffer);
-						fMap << sBuffer << endl;
-					}
-
-
 				
 				//Pickups
 				//Are there any pickups?
@@ -106,9 +88,6 @@ void createMap()
 							cout << "What is the description of item " << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
 							getline (cin, sBuffer);
 							fMap << sBuffer << endl;
-
-							//Hidden?
-							cout << "Is the pickup hidden initally? (0 or 1)" << iCounterPickups << " at room " << iIndexRows << "," << iIndexColumns << " Floor " << iIndexFloors << endl;
 
 							iCounterPickups++;
 						}
@@ -168,6 +147,24 @@ void createMap()
 						}
 					}
 					//End of Interactables stuff
+					
+					//First visit
+					cout << "Does something happen on the first visit?(0 or 1)" << endl;
+					getline( cin, sBuffer );
+					fMap << sBuffer << endl;
+					int iHowManyVisits = strtol( sBuffer.c_str(), NULL, 10);
+					
+					if ( iHowManyVisits > 0 )
+					{
+					int iCounterVisits = 0;
+					while ( iCounterVisits < iHowManyVisits )
+						{
+						cout << "What does it say on the first visit?" << endl;
+						getline (cin, sBuffer);
+						fMap << sBuffer << endl;
+						iCounterVisits++;
+						}
+					}
 				}
 			}
 		}
