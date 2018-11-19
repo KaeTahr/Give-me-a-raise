@@ -38,6 +38,8 @@ struct oRoom
 	int iHowManyPickups = 0;
 	oInteractables oArrInteractables[10];
 	int iHowManyInteractables = 0;
+	short int iHowManyVisits = 0;
+	string sVisit;
 };
 
 //NOT FINISHED
