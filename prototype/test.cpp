@@ -281,6 +281,35 @@ string getUserInput()
 	getline( cin, sInput);
 	return sInput;
 }
+/* useLaser
+ * Usage of the spy-laser. Checks if the laser is in the inventory and then uses it
+ * Inputs: Map matrix and player location
+ * Outputs: Chhanges map file
+ */
+void useLaser( oRoom oMatMap[3][10][10], oGamer oPlayer)
+{ 
+	
+}
+
+/* useGun
+ * Usage of the gun
+ * Inputs: The map matrix and the player
+ * Outputs: Writes to the map file
+ */
+void useGun( oRoom oMatMap[3][10][10], oGamer oPlayer)
+{ 
+	
+}
+
+/* useClothes
+ * usage of the cool clothes
+ * Inputs: player
+ * Outputs: writes to the player inventory
+ */
+void useClothes ( oGamer &oPlayer)
+{ 
+	
+}
 
 /* parse
  * Receives a string, and splits it in up to 4 substrings, and then interprets the user input
@@ -518,7 +547,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			//laser
 			if ( sArrInput[1] == "laser")
 			{ 
-				if ( oPlayer.iLocation[0] == 1 && oPlayer[1] == 3 && oPlayer[2] == 0)
+				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 3 && oPlayer.iLocation[2] == 0)
 				{ 
 					useLaser(oMatMap, oPlayer);
 				}
@@ -530,12 +559,12 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			//camera
 			else if ( sArrInput[1] == "camera")
 			{ 
-				useCamera();
+				cout << "You take a picture of the room as evidence" << endl;
 			}
 			//gun
 			else if ( sArrInput[1] == "gun")
 			{ 
-				if ( oPlayer.iLocation[0] == 1 && oPlayer[1] == 3 && oPlayer[2] == 1)
+				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 3 && oPlayer.iLocation[2] == 1)
 				{ 
 					useGun(oMatMap, oPlayer);
 				}
@@ -544,7 +573,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			//clothes
 			else if ( sArrInput[1] == "cool" && sArrInput[2] == "clothes")
 			{ 
-				useClothes();
+				useClothes(oPlayer);
 			}
 		}
 		
