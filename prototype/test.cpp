@@ -216,6 +216,20 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 { 
 	//First print general room information
 	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sName << " Floor: " << oPlayer.iLocation[0] << " (" << oPlayer.iLocation[1] << ", " << oPlayer.iLocation[2] << ")" << endl;
+	cout << "Inventory: ";
+	if ( oPlayer.iInInventory > 0 )
+	{ 
+		for ( int iCounter = 0; iCounter < oPlayer.iInInventory; iCounter++)
+		{ 
+			cout << oPlayer.oArrInventory[iCounter].sName << ". "; 
+		}
+		cout << endl;
+
+	}
+	else
+	{ 
+		cout << "nothing." << endl;
+	}
 	
 	//Normal description of the room
 	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 0 )
