@@ -261,7 +261,7 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 string getUserInput()
 { 
 	string sInput;
-	cout << "? ";
+	cout << "→ ";
 	getline( cin, sInput);
 	return sInput;
 }
