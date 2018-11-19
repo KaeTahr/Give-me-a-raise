@@ -102,7 +102,6 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 						//Hidden?
 						getline( fMap, sBuffer);
 						oMatMap[iIndexFloors][iIndexRows][iIndexColumns].oArrPickups[iCounterPickups].bHidden = strtol( sBuffer.c_str(), NULL, 10);
-						
 						iCounterPickups++;
 					}
 				}
@@ -147,6 +146,21 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 					}
 				}
 				//End of Interactables stuff
+				
+				// Has a special dialog if visited?
+				getline( fMap, sBuffer );
+				oMatMap[iIndexFloors][iIndexRows][iIndexColumns].iHowManyVisits = strtol( sBuffer.c_str(), NULL, 10);
+				
+				if ( oMatMap[iIndexFloors][iIndexRows][iIndexColumns].iHowManyVisits > 0 )
+				{
+					int iCounterVisits = 0;
+					while ( iCounterVisits < oMatMap[iIndexFloors][iIndexRows][iIndexColumns].iHowManyVisits )
+					{
+						getline( fMap, oMatMap[iIndexFloors][iIndexRows][iIndexColumns].sVisit);
+						iCounterVisits++;
+					}
+				}
+				// End of visits stuff.
 			}
 		}
 	}
@@ -157,6 +171,7 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 	}
 	fMap.close();
 }
+
 extern void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind);
 
 /* printInit
@@ -198,14 +213,31 @@ void printInit( )
 void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 { 
 	//First print general room information
-	cout << "Floor: " << oPlayer.iLocation[0] << " (" << oPlayer.iLocation[1] << ", " << oPlayer.iLocation[2] << ")" << endl <<oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
-
+	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sName << " Floor: " << oPlayer.iLocation[0] << " (" << oPlayer.iLocation[1] << ", " << oPlayer.iLocation[2] << ")" << endl;
+	
+	//Normal description of the room
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 0 )
+	{
+	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
+	}
+	else
+	{
+	//Information for first visit
+	while ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 1 )
+		{
+		cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sVisit << endl;
+		oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits--;
+		}
+	}
+	
+	
+	
 	//Then print information on visible interactables
 	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyInteractables > 0)
 	{ 
 		for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyInteractables; iCounter++ )
 		{ 
-				cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].sNameI << endl;
+				cout << "Objects: " << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[iCounter].sNameI << endl;
 		}
 	}
 	//Lastly print out Pickups information
@@ -398,17 +430,68 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				cout << "There are no stairs here" << endl;
 			}
 		}
+		
+		// End of Stairs
+		
+		//If there is a pickup...
 		else if ( sArrInput[0] == "find")
 		{ 
 			findPickup(oMatMap, oPlayer, sArrInput[1]);
 		}
-
+		//End of find
+		
+		
+		// Quiting game
+		
 		else if ( sArrInput[0] == "quit")
 		{ 
 			cout << "Exiting game" << endl;
 			bGameRunning = false;
 		}
-
+		
+		//If interactable can be examined...
+		else if ( sArrInput[0] == "examine" || sArrInput[0] == "Examine")
+		{
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].bCanExamine == true ) 
+			{
+				if ( sArrInput[1] == oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sNameI)
+				{
+					cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sExamination << endl;
+				}
+				else
+				{
+					cout << "Seems that " << sArrInput[1] << " can't be examined." << endl;
+				}
+				
+			}
+			else 
+			{
+				cout << "Seems that " << sArrInput[1] << " can't be examined." << endl;
+			}
+		}
+		
+		// End of examinations
+		// If interactable can be activated...
+		else if ( sArrInput[0] == "activate" || sArrInput[0] == "Activate" )
+		{
+			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].bCanActivate == true )
+			{
+				if ( sArrInput[1] == oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sNameI)
+				{
+					cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
+				}
+				else
+				{
+					cout << "Seems that " << sArrInput[1] << " can't be activated." << endl;
+				}
+				
+			}
+			else 
+			{
+				cout << "Seems that " << sArrInput[1] << " can't be activated." << endl;
+			}		
+		}
+		
 
 		else
 		{ 
