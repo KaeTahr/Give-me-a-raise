@@ -303,7 +303,24 @@ void useLaser( oRoom oMatMap[3][10][10], oGamer oPlayer)
  */
 void useClothes ( oGamer &oPlayer)
 { 
-	cout << "You are now wearing cool detective clothes, now your old clothes are in your inventory" << endl;
+	bool bClothes = false;
+	for ( int iCounter = 0; iCounter < oPlayer.iInInventory; iCounter++)
+	{ 
+		if ( oPlayer.oArrInventory[iCounter].sName == "clothes")
+		{ 
+			bClothes = true;
+			break;	
+		}
+	}
+
+	if ( bClothes == true)
+	{ 
+		cout << "You are now wearing cool detective clothes, now your old clothes are in your inventory" << endl;
+	}
+	else 
+	{ 
+		cout << "You don't have any clothes in your inventory" << endl;
+	}
 }
 
 /* parse
@@ -566,7 +583,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 
 			}
 			//clothes
-			else if ( sArrInput[1] == "cool" && sArrInput[2] == "clothes")
+			else if ( sArrInput[1] == "clothes")
 			{ 
 				useClothes(oPlayer);
 			}
