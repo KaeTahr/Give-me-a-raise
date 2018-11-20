@@ -601,8 +601,8 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
  * Outputs: Changes map values
  *
  */
-/*
-checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
+
+void checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 { 
 	if ( oPlayer.iInInventory > 0)
 	{ 
@@ -610,7 +610,7 @@ checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 		{ 
 			if ( oPlayer.oArrInventory[iCounter].sName == "gun")
 			{ 
-				oMatMap[1][3][1].oStaircase.bCanGoDown = true;
+				oMatMap[1][1][3].oStaircase.bCanGoDown = true;
 			}
 			else 
 			{ 
@@ -625,7 +625,7 @@ checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 		oMatMap[1][3][1].oStaircase.bCanGoDown = false;
 	}
 }
-*/
+
 
 /* main
  * calls all other functions. Contains the game loop
@@ -645,7 +645,7 @@ int main ()
 	//Initialize variables
 	bGameRunning = 1;
 	oPlayer.iInInventory = 0;
-	oPlayer.iLocation[0] = 1;
+	oPlayer.iLocation[0] = 0;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
 	oPlayer.iInInventory = 3;
@@ -663,7 +663,7 @@ int main ()
 		sInput = getUserInput();
 		//Processing
 		parse( oPlayer, oMatMap, sInput);
-		//checkGun(oMatMap, oPlayer);
+		checkGun(oMatMap, oPlayer);
 
 
 		
