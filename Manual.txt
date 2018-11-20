@@ -1,6 +1,7 @@
 Compiling the game:
-In order to complie the game using gcc, run
-g++ structs.h main.cpp find.cpp pickup.cpp Teleport.cpp Riddle.cpp leave.cpp -o [filename you'd like to output to] 
+In order to complie the game using gcc, simply run
+make
+
 Movement:
 N, North, north
 S, South, south
