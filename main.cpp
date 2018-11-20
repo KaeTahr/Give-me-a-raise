@@ -187,7 +187,7 @@ extern void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 
 extern void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning);
 
-extern void riddle ( oRoom oMatMap[3][10][10], oGamer oPlayer);
+extern void riddle ( oRoom oMatMap[3][10][10], oGamer oPlayer,  bool &bGameRunning);
 
 /* printInit
  * prints the first line of the story, WHICH WON'T BE REPEATED
@@ -243,12 +243,6 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 	{ 
 		cout << "nothing." << endl;
 	}
-	
-	//Normal description of the room
-	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 0 )
-	{
-	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
-	}
 	//print Possible directions
 	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bNorth == true)
 	{ 
@@ -266,11 +260,18 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 	{ 
 		cout << "You can move west from here" << endl;
 	}
+	//Normal description of the room
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 0 )
+	{
+	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
+	}
 	else
 	{
 	//Information for first visit
+	cout << "checking first visit" << endl;
 	while ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 1 )
 		{
+		cout << "found" << endl;
 		cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sVisit << endl;
 		oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits--;
 		}
@@ -563,9 +564,9 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				{
 					if ( oPlayer.iLocation[0] == 2 && oPlayer.iLocation[1] == 1 && oPlayer.iLocation[2] == 0 )
 					{
-						riddle (oMatMap, oPlayer);
+						cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
+						riddle (oMatMap, oPlayer,bGameRunning );
 					}
-					cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
 				}
 				else
 				{
@@ -704,7 +705,6 @@ int main ()
 
 	//Initialize variables
 	bGameRunning = 1;
-	oPlayer.iInInventory = 0;
 	oPlayer.iLocation[0] = 1;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
