@@ -268,10 +268,8 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 	else
 	{
 	//Information for first visit
-	cout << "checking first visit" << endl;
 	while ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits == 1 )
 		{
-		cout << "found" << endl;
 		cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sVisit << endl;
 		oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyVisits--;
 		}
@@ -676,14 +674,16 @@ void checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 			else 
 			{ 
 				
-				oMatMap[1][3][1].oStaircase.bCanGoDown = false;
+				oMatMap[1][1][3].oStaircase.bCanGoDown = false;
+				oMatMap[1][1][3].sDescription = "Stairs here lead to the basement. I won't go down there without my gun";
 			}
 		}
 	}
 	else
 	{ 
 		
-		oMatMap[1][3][1].oStaircase.bCanGoDown = false;
+		oMatMap[1][1][3].sDescription = "Stairs here lead to the basement. I won't go down there without my gun";
+		oMatMap[1][1][3].oStaircase.bCanGoDown = false;
 	}
 }
 
