@@ -2,6 +2,11 @@
 #include <string>
 #include "structs.h"
 
+/* riddle
+ * a minigame the player needs to complete
+ * Inputs: The map matrix and the player
+ * Outputs: when solved, writes to the map matrix
+ */
 void riddle ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 {
 	bool bCorrect = false;

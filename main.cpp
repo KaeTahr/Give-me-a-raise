@@ -1,3 +1,10 @@
+/* text-adventure project
+ * Kevin Chinchilla
+ * A00825945
+ * David Garcia
+ * A01570231
+ * Nov 20, 2018
+ */
 #include <iostream>
 #include <fstream>
 #include <string>

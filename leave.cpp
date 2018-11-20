@@ -4,6 +4,11 @@
 #include <fstream>
 using namespace std;
 
+/* leave
+ * processes the player attempt to leave, checking if he can leave from the position he is in, if he has the requried items, and lastly it processes whether the player will get the good ending or the bad ending based on his progress
+ * Input: Map matrix, the player, and the game loop bool
+ * Outputs: May change the game loop bool
+ */
 void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning)
 { 
 	bool bKey = false;

@@ -3,7 +3,11 @@
 #include "structs.h"
 using namespace std;
 
-
+/* findPickup
+ * checks if the pickup the player wants to reaveal exists, and if it does, reveals it
+ * Inputs: Map Matrix, the player, the name of the item the player is trying to find
+ * Outputs: may write to Map Matrix
+ */
 void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind)
 { 
 	bool bFound = false;

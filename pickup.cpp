@@ -3,6 +3,11 @@
 #include "structs.h"
 using namespace std;
 
+/* takePickup
+ * Checks whether the pickup the user is trying to take exists, and if it does, it adds it to the inventory
+ * Inputs: The map matrix, the player, the name of the item the player wants to pick
+ * Output: Writes to the player inventory
+ */
 void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 { 
 	for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyPickups; iCounter ++)
