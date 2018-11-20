@@ -82,7 +82,7 @@ void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning)
 			}
 			else 
 			{ 
-				cout << "You can't leave without the subject as evidence!" << endl;
+				cout << "You can't leave without evidence! Maybe you can find a subject the Doctor was experminenting on" << endl;
 			}
 		}
 		else 

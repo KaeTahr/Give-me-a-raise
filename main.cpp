@@ -362,7 +362,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 	}
 	
 	//MOVEMENT
-		if ( sArrInput[0] == "north" || sArrInput[0] == "North" || sArrInput[0] == "N")
+		if ( sArrInput[0] == "north" || sArrInput[0] == "North" || sArrInput[0] == "N"|| sArrInput[0] == "n")
 		{ 
 			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bNorth == 0)
 			{ 
@@ -375,7 +375,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}
 		}
 
-		else if ( sArrInput[0] == "south" || sArrInput[0] == "South" || sArrInput[0] == "S")
+		else if ( sArrInput[0] == "south" || sArrInput[0] == "South" || sArrInput[0] == "S" || sArrInput[0] == "s")
 		{ 
 			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bSouth == 0)
 			{ 
@@ -388,7 +388,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}
 		}
 
-		else if ( sArrInput[0] == "east" || sArrInput[0] == "East" || sArrInput[0] == "E")
+		else if ( sArrInput[0] == "east" || sArrInput[0] == "East" || sArrInput[0] == "E"|| sArrInput[0] == "e")
 		{ 
 			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bEast == 0)
 			{ 
@@ -402,7 +402,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}
 		}
 		
-		else if ( sArrInput[0] == "west" || sArrInput[0] == "West" || sArrInput[0] == "W")
+		else if ( sArrInput[0] == "west" || sArrInput[0] == "West" || sArrInput[0] == "W"|| sArrInput[0] == "w")
 		{ 
 			if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bWest == 0)
 			{ 
@@ -582,10 +582,19 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				}
 			}
 			//camera
-			else if ( sArrInput[1] == "camera")
+			else if ( sArrInput[1] == "camera" )
 			{ 
-				cout << "You take a picture of the room as evidence" << endl;
+				if (oPlayer.oArrInventory[0].sName == "camera" && oPlayer.iInInventory > 0)
+				{ 
+	
+					cout << "You take a picture of the room as evidence" << endl;
+				}
+				else
+				{ 
+					cout << "You have lost your camera!" << endl;
+				}
 			}
+			
 			//gun
 			else if ( sArrInput[1] == "gun")
 			{ 
@@ -639,6 +648,8 @@ void checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 			if ( oPlayer.oArrInventory[iCounter].sName == "gun")
 			{ 
 				oMatMap[1][1][3].oStaircase.bCanGoDown = true;
+				oMatMap[1][1][3].oStaircase.sDescription = "The stairs here head down again. I can continue, now that I have my gun. ";
+				
 			}
 			else 
 			{ 
@@ -677,9 +688,9 @@ int main ()
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
 	oPlayer.iInInventory = 3;
-	oPlayer.oArrInventory[0].sName = "gun";
+	oPlayer.oArrInventory[0].sName = "camera";
 	oPlayer.oArrInventory[1].sName = "laser";
-	oPlayer.oArrInventory[2].sName = "camera";
+	oPlayer.oArrInventory[2].sName = "gun";
 	while ( bGameRunning == 1) // Game loop start
 	{
 		//Print current status

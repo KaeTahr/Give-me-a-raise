@@ -28,6 +28,7 @@ void riddle ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 	{
 		oMatMap[2][3][1].oStaircase.bCanGoDown = true;
 		cout << "A passageway has been revealed in the novel sections of the bookshelf" << endl << "For smart guys: lqsxw ilqg forwkhv rq urrp Ehg 4 wr ilqg dq hdvwhu hjj"<< endl;
+		oMatMap[2][3][1].sDescription = "The bookshelf has moved revealing a staircase heading down";
 	}
 	
 }
