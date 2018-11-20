@@ -180,6 +180,8 @@ extern void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 
 extern void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning);
 
+extern void riddle ( oRoom oMatMap[3][10][10], oGamer oPlayer);
+
 /* printInit
  * prints the first line of the story, WHICH WON'T BE REPEATED
  * Input: a string from a file
@@ -535,6 +537,10 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			{
 				if ( sArrInput[1] == oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sNameI)
 				{
+					if ( oPlayer.iLocation[0] == 2 && oPlayer.iLocation[1] == 1 && oPlayer.iLocation[2] == 0 )
+					{
+						riddle (oMatMap, oPlayer);
+					}
 					cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
 				}
 				else
