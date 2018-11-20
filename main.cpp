@@ -614,10 +614,9 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			//gun
 			else if ( sArrInput[1] == "gun")
 			{ 
-				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 3 && oPlayer.iLocation[2] == 1)
-				{
-					cout << "I shouldn't use my gun here" << endl;
-				}
+				
+				cout << "I shouldn't use my gun here" << endl;
+			
 
 			}
 			//clothes
