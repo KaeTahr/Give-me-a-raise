@@ -196,7 +196,7 @@ void printInit( )
 	{ 
 		cout << "game launched" << endl;
 		int iCounter = 0;
-		while ( iCounter < 10) // Will print up to 10 lines
+		while ( iCounter < 56) 
 		{
 
 			getline( fDescription, sLaunch); 
@@ -283,7 +283,7 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 string getUserInput()
 { 
 	string sInput;
-	cout << "? ";
+	cout << "> ";
 	getline( cin, sInput);
 	return sInput;
 }
