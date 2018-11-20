@@ -176,6 +176,9 @@ extern void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind);
 
 extern void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem);
 
+
+extern void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning);
+
 /* printInit
  * prints the first line of the story, WHICH WON'T BE REPEATED
  * Input: a string from a file
@@ -577,6 +580,10 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				useClothes(oPlayer);
 			}
 		}
+		else if ( sArrInput[0] == "leave")
+		{ 
+			leave ( oMatMap, oPlayer, bGameRunning);
+		}
 		
 
 		else
@@ -645,7 +652,7 @@ int main ()
 	//Initialize variables
 	bGameRunning = 1;
 	oPlayer.iInInventory = 0;
-	oPlayer.iLocation[0] = 0;
+	oPlayer.iLocation[0] = 1;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
 	oPlayer.iInInventory = 3;
