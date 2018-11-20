@@ -22,7 +22,7 @@ bool bGameRunning; //For game loop
 void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMapColumns)
 { 
 	ifstream fMap;
-	fMap.open( "Test.map");
+	fMap.open( "GiveMeARaise.map");
 	string sBuffer;//Needed to use this because reading from a file doesn't play nice when mixing strings and other datatypes
 	if ( fMap.is_open())
 	{ 
@@ -277,7 +277,7 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 string getUserInput()
 { 
 	string sInput;
-	cout << "→ ";
+	cout << "? ";
 	getline( cin, sInput);
 	return sInput;
 }
@@ -288,7 +288,8 @@ string getUserInput()
  */
 void useLaser( oRoom oMatMap[3][10][10], oGamer oPlayer)
 { 
-	
+	oMatMap[1][0][3].oStaircase.bCanGoDown = true;
+	cout << "You make a human-sized hole in which you fit in." << endl;
 }
 
 /* useGun
@@ -547,7 +548,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			//laser
 			if ( sArrInput[1] == "laser")
 			{ 
-				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 3 && oPlayer.iLocation[2] == 0)
+				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 0 && oPlayer.iLocation[2] == 3)
 				{ 
 					useLaser(oMatMap, oPlayer);
 				}
@@ -617,7 +618,6 @@ checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 				oMatMap[1][3][1].oStaircase.bCanGoDown = false;
 			}
 		}
-
 	}
 	else
 	{ 
@@ -645,9 +645,13 @@ int main ()
 	//Initialize variables
 	bGameRunning = 1;
 	oPlayer.iInInventory = 0;
-	oPlayer.iLocation[0] = 0;
+	oPlayer.iLocation[0] = 1;
 	oPlayer.iLocation[1] = 0;
 	oPlayer.iLocation[2] = 0;
+	oPlayer.iInInventory = 3;
+	oPlayer.oArrInventory[0].sName = "gun";
+	oPlayer.oArrInventory[1].sName = "laser";
+	oPlayer.oArrInventory[2].sName = "camera";
 	while ( bGameRunning == 1) // Game loop start
 	{
 		//Print current status
