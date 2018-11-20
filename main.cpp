@@ -172,10 +172,11 @@ void getMap( oRoom oMatMap[3][10][10], int &iMapFloors, int &iMapRows, int &iMap
 	fMap.close();
 }
 
+extern void teleport ( oRoom oMatMap[3][10][10], oGamer &oPlayer);
+
 extern void findPickup(oRoom oMatMap[3][10][10], oGamer oPlayer, string sFind);
 
 extern void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem);
-
 
 extern void leave ( oRoom oMatMap[3][10][10], oGamer oPlayer, bool &bGameRunning);
 
@@ -295,16 +296,6 @@ void useLaser( oRoom oMatMap[3][10][10], oGamer oPlayer)
 	cout << "You make a human-sized hole in which you fit in." << endl;
 }
 
-/* useGun
- * Usage of the gun
- * Inputs: The map matrix and the player
- * Outputs: Writes to the map file
- */
-void useGun( oRoom oMatMap[3][10][10], oGamer oPlayer)
-{ 
-	
-}
-
 /* useClothes
  * usage of the cool clothes
  * Inputs: player
@@ -312,7 +303,7 @@ void useGun( oRoom oMatMap[3][10][10], oGamer oPlayer)
  */
 void useClothes ( oGamer &oPlayer)
 { 
-	
+	cout << "You are now wearing cool detective clothes, now your old clothes are in your inventory" << endl;
 }
 
 /* parse
@@ -569,8 +560,8 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			else if ( sArrInput[1] == "gun")
 			{ 
 				if ( oPlayer.iLocation[0] == 1 && oPlayer.iLocation[1] == 3 && oPlayer.iLocation[2] == 1)
-				{ 
-					useGun(oMatMap, oPlayer);
+				{
+					cout << "I shouldn't use my gun here" << endl;
 				}
 
 			}
@@ -671,8 +662,7 @@ int main ()
 		//Processing
 		parse( oPlayer, oMatMap, sInput);
 		checkGun(oMatMap, oPlayer);
-
-
+		teleport (oMatMap, oPlayer);
 		
 	}
 	
