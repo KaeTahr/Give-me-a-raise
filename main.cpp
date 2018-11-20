@@ -249,6 +249,23 @@ void printStatus( oGamer oPlayer, oRoom oMatMap[3][10][10])
 	{
 	cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].sDescription << endl;
 	}
+	//print Possible directions
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bNorth == true)
+	{ 
+		cout << "You can move north from here" << endl;
+	}
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bSouth == true)
+	{ 
+		cout << "You can move south from here" << endl;
+	}
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bEast == true)
+	{ 
+		cout << "You can move east from here" << endl;
+	}
+	if ( oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bWest == true)
+	{ 
+		cout << "You can move west from here" << endl;
+	}
 	else
 	{
 	//Information for first visit
@@ -609,6 +626,10 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			{ 
 				useClothes(oPlayer);
 			}
+			else
+			{ 
+				cout << "You can't use " << sArrInput[1] << endl;
+			}
 		}
 		else if ( sArrInput[0] == "leave")
 		{ 
@@ -648,7 +669,7 @@ void checkGun ( oRoom oMatMap[3][10][10], oGamer oPlayer)
 			if ( oPlayer.oArrInventory[iCounter].sName == "gun")
 			{ 
 				oMatMap[1][1][3].oStaircase.bCanGoDown = true;
-				oMatMap[1][1][3].oStaircase.sDescription = "The stairs here head down again. I can continue, now that I have my gun. ";
+				oMatMap[1][1][3].sDescription = "The stairs here head down again. I can continue, now that I have my gun. ";
 				
 			}
 			else 

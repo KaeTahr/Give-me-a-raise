@@ -17,6 +17,6 @@ void teleport ( oRoom oMatMap[3][10][10], oGamer &oPlayer)
 		oPlayer.iInInventory = 0;
 		oMatMap[0][3][0].iHowManyVisits = 0;
 		oMatMap[0][1][2].bSouth = 1;
-		oMatMap[0][1][3].bSouth = 1;
+		oMatMap[0][2][2].bSouth = 1;
 	}
 }

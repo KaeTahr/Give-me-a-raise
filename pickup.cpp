@@ -10,6 +10,7 @@ using namespace std;
  */
 void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 { 
+	bool bTaken = false;
 	for ( int iCounter = 0; iCounter < oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].iHowManyPickups; iCounter ++)
 	{ 
 		if ( sItem == oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].sNameP && oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bHidden == false)
@@ -19,6 +20,7 @@ void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 				oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrPickups[iCounter].bPicked = true;
 				cout << "You picked up a " << sItem << endl;
 				oPlayer.oArrInventory[oPlayer.iInInventory].sName = sItem;
+				bTaken = true;
 				oPlayer.iInInventory++;
 				break;
 
@@ -27,12 +29,18 @@ void takePickup( oRoom oMatMap[3][10][10], oGamer &oPlayer, string sItem)
 			else
 			{ 
 				cout << "You already picked the " << sItem << " that was here" << endl;
+
 			}
 		}
-		else 
+		if ( bTaken == false)
 		{ 
-			cout << "There are no " << sItem << " here." << endl;
+			cout << "You can't take the " << sItem <<  endl;
 		}
+	}
+	
+	if ( bTaken == false)
+	{ 
+		cout << "You can't take the " << sItem <<  endl;
 	}
 }
 
