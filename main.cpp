@@ -562,9 +562,10 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				{
 					if ( oPlayer.iLocation[0] == 2 && oPlayer.iLocation[1] == 1 && oPlayer.iLocation[2] == 0 )
 					{
-						cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
+						
 						riddle (oMatMap, oPlayer,bGameRunning );
 					}
+					cout << oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].oArrInteractables[0].sActivated << endl;
 				}
 				else
 				{
