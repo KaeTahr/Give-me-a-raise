@@ -433,7 +433,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 		}
 
 		//Stairs
-		else if ( sArrInput[0] == "go")
+		else if ( sArrInput[0] == "go" || sArrInput[0] == "Go")
 		{ 
 			if ( sArrInput[1] == "up" || sArrInput[1] == "upstairs")
 			{ 
@@ -472,7 +472,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				}
 			}
 		}
-		else if ( sArrInput[0] == "up")
+		else if ( sArrInput[0] == "up" || sArrInput[0] == "Up")
 		{ 
 				
 			if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
@@ -492,7 +492,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 				cout << "There are no stairs here" << endl;
 			}
 		}
-		else if ( sArrInput[0] == "down")
+		else if ( sArrInput[0] == "down" || sArrInput[0] == "Down")
 		{ 
 				
 			if (oMatMap[oPlayer.iLocation[0]][oPlayer.iLocation[1]][oPlayer.iLocation[2]].bStairs == true)
@@ -516,7 +516,7 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 		// End of Stairs
 		
 		//If there is a pickup...
-		else if ( sArrInput[0] == "find")
+		else if ( sArrInput[0] == "find" || sArrInput[0] == "Find")
 		{ 
 			findPickup(oMatMap, oPlayer, sArrInput[1]);
 		}
@@ -579,12 +579,12 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			}		
 		}
 		//Pick
-		else if ( sArrInput[0] == "pick" || sArrInput[0] == "take")
+		else if ( sArrInput[0] == "pick" || sArrInput[0] == "take" || sArrInput[0] == "Take")
 		{ 
 			takePickup( oMatMap, oPlayer, sArrInput[1]);
 		}
 		//Using Invnetory
-		else if ( sArrInput[0] == "use")
+		else if ( sArrInput[0] == "use" || sArrInput[0] == "Use")
 		{ 
 			//laser
 			if ( sArrInput[1] == "laser")
@@ -641,6 +641,8 @@ void parse(oGamer &oPlayer, oRoom oMatMap[3][10][10], string sUserInput )
 			cout << "Sorry, I don't understand: " << sArrInput[0]	<< " " << sArrInput[1] << " " << sArrInput[2] << " " << sArrInput[3] << endl;
 		}
 		cout << endl;
+
+		cout << "*********************" << endl;
 	//cout << sArrInput[3] << endl;
 	//Here we need to split this string in 4
 	//Most complex sentence would be VERB + IO + PREPOSITION + DO
